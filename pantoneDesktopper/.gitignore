@@ -1,3 +1,7 @@
+# Files not for sharing ;o
 panpage.html
 rgbs.txt
 *.ttf
+
+# Generated paps
+*.png
