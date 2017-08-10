@@ -3,7 +3,7 @@ import random
 
 height = 1600
 width = 2560
-fntsize = int((width * height) / 300**2)
+fntsize = int((width * height) / 400**2)
 
 # Get random colour from pantone rgb list
 with open('rgbs.txt') as fp:
@@ -23,7 +23,7 @@ im = Image.new('RGB', (width, height), "#"+clrHex)
 gfx = ImageDraw.Draw(im)
 
 txt  = "PANTONE " + clrDesc + "\n" + clrHex
-hlvtc = ImageFont.truetype('helveticaneuebold.ttf', fntsize)
+fnt = ImageFont.truetype('Pixeled.ttf', fntsize)
 
 sqsize = int(height/3)
 strk = int(fntsize/4)
@@ -34,7 +34,7 @@ gfx.rectangle(((sqx, sqy),(sqx + sqsize, sqy + sqsize)), fill="white")
 gfx.rectangle(((sqx + strk, sqy + strk),
               (sqx + sqsize - strk, sqy + sqsize - strk)), fill="#"+clrHex)
 
-gfx.text((sqx + fntsize, sqy + sqsize - fntsize*3), txt, font=hlvtc, fill="white")
+gfx.text((sqx + fntsize*1.5, sqy + sqsize - fntsize*6), txt, font=fnt, fill="white")
 
 
-im.save("pap.png", "PNG")
+im.save("/tmp/pap.png", "PNG")
