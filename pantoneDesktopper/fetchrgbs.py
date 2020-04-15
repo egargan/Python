@@ -5,7 +5,7 @@ import xml.etree.ElementTree as ET
 
 def main():
 
-    tree = ET.parse('panpage.html')
+    tree = ET.parse('pancolors.htm')
     root = tree.getroot()
 
     for row in root.iter('tr'):

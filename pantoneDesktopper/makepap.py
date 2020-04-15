@@ -1,22 +1,48 @@
 from PIL import Image, ImageDraw, ImageFont
 import random
 
+import os.path
+import sys
+
+hexchars = ['0','1','2','3','4','5','6','7','8','9',
+            'a','b','c','d','e','f',
+            'A','B','C','D','E','F']
+
+# Get random colour from pantone rgb list
+with open('rgbs.txt') as fp :
+
+    # Expect current colour at top, in form '#current=lineindex'
+    currentClr = fp.readline()
+    numlines = sum(1 for _ in fp)
+
+    while True :
+
+        fp.seek(0)
+
+        # Get randnum between 1 and list length
+        # (index 0 holds current wallpaper colour data)
+        cindex = random.randint(1, numlines)
+
+        for _ in range(cindex) :
+            fp.readline()
+
+        clrStr = fp.readline().rstrip('\n')
+        splitClrStr = clrStr.split("/")
+
+        if clrStr and len(splitClrStr) == 2 :
+
+            clrDesc = clrStr.split("/")[0]
+            clrHex = clrStr.split("/")[1]
+
+            if len(clrHex) == 6 and all(c in hexchars for c in clrHex) :
+                break
+
+print(cindex) # line number to stdout, for use in sed
+
+
 height = 1600
 width = 2560
 fntsize = int((width * height) / 400**2)
-
-# Get random colour from pantone rgb list
-with open('rgbs.txt') as fp:
-    # Get randnum between 0 and list length
-    cindex = random.randint(0, sum(1 for _ in fp))
-    fp.seek(0)
-
-    for _ in range(cindex):
-        fp.readline()
-    clrStr = fp.readline().rstrip('\n')
-
-clrDesc = clrStr.split("/")[0]
-clrHex = clrStr.split("/")[1]
 
 # Create pap
 im = Image.new('RGB', (width, height), "#"+clrHex)
@@ -37,4 +63,4 @@ gfx.rectangle(((sqx + strk, sqy + strk),
 gfx.text((sqx + fntsize*1.5, sqy + sqsize - fntsize*6), txt, font=fnt, fill="white")
 
 
-im.save("/tmp/pap.png", "PNG")
+im.save(os.path.expanduser("~/pap.png"), "PNG")

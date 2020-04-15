@@ -1,1 +1,11 @@
-.python-version
+# Files not for sharing ;o
+panpage.html
+pancolors.htm
+rgbs.txt
+*.ttf
+
+# Generated paps
+*.png
+
+# Apple's folder prefs
+.DS_Store
